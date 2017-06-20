@@ -8,6 +8,6 @@ object Main extends App {
   val system = ActorSystem("ClusterSystem", ConfigFactory.load().withValue("akka.remote.netty.tcp.port", ConfigValueFactory.fromAnyRef(args(0).toInt)))
 
   //Starting Cluster listener
-  system.actorOf(Props(new ClusterListener(args.lift(1).map(_.toInt))))
+  system.actorOf(Props(new ClusterListener(args(0).toInt, args.lift(1).map(_.toInt))), "ClusterListener")
 
 }
