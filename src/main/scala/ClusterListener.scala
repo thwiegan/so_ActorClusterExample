@@ -31,7 +31,7 @@ class ClusterListener(akkaPort: Int, seedPort: Option[Int]) extends Actor with A
     remoteActor.foreach(_ ! AddMe)
 
     seedPort.filter(_ == akkaPort).foreach { _ =>
-      context.system.scheduler.scheduleOnce(FiniteDuration(20, SECONDS)) {
+      context.system.scheduler.schedule(FiniteDuration(20, SECONDS), FiniteDuration(20, SECONDS)) {
         router.route(BroadcastedMessage, self)
       }
     }
